@@ -15,15 +15,15 @@
                     </span> 
                 <li>
                 <li>
-                    <span id="img"><img src="/static/img/canada.png"></span>
+                    <span id="ca-img"><img src="/static/img/canada.png"></span>
                 </li>
             </ul>
         </div>
         <div class="main">
             <div class="main-top">
                 <h2>Search:</h2>
-                <input type="text" id="search-filter" placeholder="What would you like to purchase today?">
-                <span><button type="button" class="btn btn-green" id="search">Click</button></span>
+                <input type="text" id="search-product" placeholder="What would you like to purchase today?">
+                <span><button type="button" class="btn btn-green send-message-to-server" id="search">Click</button></span>
             </div>
             <div class="main-middle">
                 <div class="option-descriptions">
@@ -40,9 +40,9 @@
                     </ul>
                 </div>
                 <div class="option-buttons">
-                    <span class="option span-op1"><button type="button" class="btn btn-yellow chosen-option" id="op1">Option 1</button></span>
-                    <span class="option span-op2"><button type="button" class="btn btn-yellow" id="op2">Option 2</button></span>
-                    <span class="option span-op3"><button type="button" class="btn btn-yellow" id="op3">Option 3</button></span>
+                    <span class="option" id="span-op1"><button type="button" class="option-btn btn btn-yellow chosen-option send-message-to-server" id="op1">Option 1</button></span>
+                    <span class="option" id="span-op2"><button type="button" class="option-btn btn btn-yellow send-message-to-server" id="op2">Option 2</button></span>
+                    <span class="option" id="span-op3"><button type="button" class="option-btn btn btn-yellow send-message-to-server" id="op3">Option 3</button></span>
                 </div>
            </div>
             <div class="main-bottom">
@@ -64,12 +64,12 @@
                         </div>
                         <div>
                             <label> Max # of Stars (out of 5.0): </label>
-                            <input type="text" id="min-num-of-stars">
+                            <input type="text" id="max-num-of-stars">
                         </div>
                         <div class="addspace"></div>
                         <div>
                             <label> Min # of Reviews: </label>
-                            <input type="text" id="min-num-of-reviews">
+                            <input type="text" id="min-num-of-ratings">
                         </div>
                         <div>
                             <label> Max # of Reviews:</label>
@@ -78,9 +78,9 @@
                         <div class="addspace"></div>
                         <div>
                             <label> Max # of Products:</label>
-                            <input type="text" id="max-num-of-ratings">
+                            <input type="text" id="max-num-of-products">
                         </div>
-                        <button type="button" class="btn btn-green" id="form-submit">Apply</button>
+                        <button type="button" class="btn btn-green send-message-to-server" id="form-submit">Apply</button>
                     </form>
                 </div> 
                 <div class="products">

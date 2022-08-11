@@ -87,7 +87,7 @@
     color: goldenrod;
 }
 
-#img img {
+#ca-img img {
    max-width: 5rem;
 }
 
@@ -149,13 +149,13 @@
     font-size: 1.1rem;
 }
 
-.main-middle .span-op1 {
+.main-middle #span-op1 {
     text-align: right;
 }
-.main-middle .span-op2 {
+.main-middle #span-op2 {
     text-align: center;
 }
-.main-middle .span-op3 {
+.main-middle #span-op3 {
     text-align: left;
 }
 
