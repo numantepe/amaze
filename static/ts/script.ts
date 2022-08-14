@@ -9,6 +9,7 @@ let min_num_of_ratings = document.querySelector("#min-num-of-ratings") as HTMLIn
 let max_num_of_ratings = document.querySelector("#max-num-of-ratings") as HTMLInputElement;
 let max_num_of_products = document.querySelector("#max-num-of-products") as HTMLInputElement;
 let chosen_op : string = "op1";
+let chosen_country: string = "ca";
 
 let send_message_to_server_list = document.querySelectorAll(".send-message-to-server");   
 for(let i = 0; i < send_message_to_server_list.length; i++)
@@ -28,6 +29,24 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
                 e.target.classList.add("chosen-option");
                 chosen_op = e.target.id;
             }
+
+            if(e.target.classList.contains("img-country")){
+                let countries = document.querySelectorAll(".div-country");
+                for(let i = 0; i < countries.length; i++)
+                {
+                    (countries[i]).classList.remove("chosen-country");
+                }
+                e.target.parentElement.classList.add("chosen-country");
+                chosen_country = e.target.id;
+
+                let desc = document.querySelector("#amazon");
+                if(chosen_country === "ca"){
+                    desc.textContent = "Amazon.ca";
+                }
+                else{
+                    desc.textContent = "Amazon.com";
+                }
+            }
         }
 
         let xhttp = new XMLHttpRequest();
@@ -37,7 +56,7 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
                 console.log("Response Type " + this.responseType);
                 console.log("Response Text " + this.responseText);
                 }
-            }
+        };
         
         const apiURL = `${webURL}/search-product`;
         xhttp.open("POST", apiURL, true);
@@ -47,7 +66,8 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
                     +"&min_num_of_stars="+min_num_of_stars.value.trim()+"&max_num_of_stars="+max_num_of_stars.value.trim()
                     +"&min_num_of_ratings="+min_num_of_ratings.value.trim()
                     +"&max_num_of_ratings="+max_num_of_ratings.value.trim()
-                    +"&max_num_of_products="+max_num_of_products.value.trim()+"&chosen_op="+chosen_op);
+                    +"&max_num_of_products="+max_num_of_products.value.trim()
+                    +"&chosen_op="+chosen_op+"&chosen_country="+chosen_country);
     });
 }
 }

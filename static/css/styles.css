@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -87,8 +86,28 @@
     color: goldenrod;
 }
 
-#ca-img img {
-   max-width: 5rem;
+li #ca-img img {
+   max-width: 84px;
+}
+li #us-img img {
+   max-width: 80px;
+}
+li #ca-img {
+    display: inline-block;
+    width: 84px;
+    height: 42px;
+}
+li #us-img {
+    display: inline-block;
+    width: 80px;
+    height: 42px;
+}
+
+.chosen-country {
+    border-style: solid;
+    border-radius: 0.4rem;
+    border-color: goldenrod;
+    border-width: 0.2rem;
 }
 
 /* Main */
