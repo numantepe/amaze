@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import lxml
 import cchardet 
+import chardet
 
 app = Flask(__name__)
 
@@ -53,7 +54,7 @@ def search_product():
         while(r.status_code > 500):
             r = requests_session.get(search_amazon_url, headers=headers)
 
-        html_doc = r.text
+        html_doc = r.content #or r.text?
         soup = BeautifulSoup(html_doc, 'lxml')
 
         products = soup.select("div.s-result-item.s-asin")
