@@ -169,13 +169,16 @@ li #us-img {
 }
 
 .main-middle #span-op1 {
-    text-align: right;
+    text-align: center;
 }
 .main-middle #span-op2 {
     text-align: center;
 }
 .main-middle #span-op3 {
-    text-align: left;
+    text-align: center;
+}
+.main-middle #span-op4 {
+    text-align: center;
 }
 
 .main-top span button {
