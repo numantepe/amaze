@@ -140,6 +140,12 @@ li #us-img {
     margin: 1rem 10%;
 }
 
+.main-middle .msg {
+    margin: 1rem 5%;
+    font-size: 1.5rem;
+    color: darkgreen;
+}
+
 .main-middle .option-descriptions ul {
     list-style: none;
     font-size: 1.3rem;

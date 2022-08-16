@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, jsonify, g
 from bs4 import BeautifulSoup
 import requests
+import lxml
+import cchardet 
 
 app = Flask(__name__)
 
@@ -28,7 +30,13 @@ def search_product():
 
     requests_session = requests.Session()
 
-    for i in range(1, 8):
+    np = 0
+    if(chosen_country == "ca"):
+        np = 8
+    elif(chosen_country == "us"):
+        np = 21
+
+    for i in range(1, np):
         search_amazon_url = search_amazon_url + "&page=" + str(i)
 
         headers = {
@@ -48,14 +56,21 @@ def search_product():
         html_doc = r.text
         soup = BeautifulSoup(html_doc, 'lxml')
 
-        products = soup.select("div.s-result-item.s-asin")[3:]
+        products = soup.select("div.s-result-item.s-asin")
+
+        #with open("html.txt", "w") as f:
+        #    f.write(products[0].prettify())
 
         for product in products:
             try:
                 h2_desc_url = product.select("h2")[0]
 
-                desc = h2_desc_url.select("span.a-size-base-plus")[0].get_text()
+                if(chosen_country == "ca"):
+                    desc = h2_desc_url.select("span.a-size-base-plus")[0].get_text()
+                elif(chosen_country == "us"):
+                    desc = h2_desc_url.select("span.a-size-medium")[0].get_text()
                 url = amazon_url + h2_desc_url.select("a")[0].get("href")
+
                 image = product.select("img.s-image")[0].get("src")
 
                 price = float(product.select("span.a-offscreen")[0].get_text()[1:])
@@ -77,7 +92,7 @@ def search_product():
             except:
                 pass
 
-    print("length:", len(product_set))
+    #print("length:", len(product_set))
 
     #with open("items.txt", "w") as f:
     #    for p in list(product_list):

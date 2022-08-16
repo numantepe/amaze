@@ -15,7 +15,7 @@ interface Product {
 let webURL : string = "http://127.0.0.1:5000";
 let search_product = document.querySelector("#search-product") as HTMLInputElement;
 let min_price = document.querySelector("#min-price") as HTMLInputElement;
-let max_price = document.querySelector("#min-price") as HTMLInputElement;
+let max_price = document.querySelector("#max-price") as HTMLInputElement;
 let min_num_of_stars = document.querySelector("#min-num-of-stars") as HTMLInputElement;
 let max_num_of_stars = document.querySelector("#max-num-of-stars") as HTMLInputElement;
 let min_num_of_ratings = document.querySelector("#min-num-of-ratings") as HTMLInputElement;
@@ -127,7 +127,7 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
 
     send_message_to_server.addEventListener("click", function (e) {
         e.preventDefault();
-
+        
         if(e.target instanceof Element){
             if(e.target.classList.contains("img-country")){
                 let countries = document.querySelectorAll(".div-country");
@@ -145,29 +145,35 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
                 else{
                     desc.textContent = "Amazon.com";
                 }
+                product_list.textContent = "";
             }
         }
 
-        let xhttp = new XMLHttpRequest();
+        if(search_product.value.trim() !== "")
+            {
+            let xhttp = new XMLHttpRequest();
 
-        xhttp.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200){
-                console.log("Response Type " + this.responseType);
-                console.log("Response Text " + this.responseText);
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200){
+                    console.log("Response Type " + this.responseType);
+                    console.log("Response Text " + this.responseText);
 
-                let response = this.responseText;
+                    let response = this.responseText;
 
-                let convertedResponse = JSON.parse(response);
-                products_json = convertedResponse;
+                    let convertedResponse = JSON.parse(response);
+                    products_json = convertedResponse;
 
-                set_up_product_list(products_json);
-                }
-        };
-        
-        const apiURL = `${webURL}/search-product`;
-        xhttp.open("POST", apiURL, true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("search_product="+search_product.value.trim()+"&chosen_country="+chosen_country);
+                    set_up_product_list(products_json);
+                    document.querySelector(".main-middle .msg").textContent = "";
+                    }
+            };
+            
+            const apiURL = `${webURL}/search-product`;
+            xhttp.open("POST", apiURL, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("search_product="+search_product.value.trim()+"&chosen_country="+chosen_country);
+            document.querySelector(".main-middle .msg").textContent = "Please wait a little while until the results show up.";
+        }
     });
 }
 }
