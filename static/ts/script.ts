@@ -21,14 +21,35 @@ let max_num_of_stars = document.querySelector("#max-num-of-stars") as HTMLInputE
 let min_num_of_ratings = document.querySelector("#min-num-of-ratings") as HTMLInputElement;
 let max_num_of_ratings = document.querySelector("#max-num-of-ratings") as HTMLInputElement;
 let max_num_of_products = document.querySelector("#max-num-of-products") as HTMLInputElement;
-let chosen_op : string = "op1";
+let chosen_op : string = "op4";
 let chosen_country: string = "ca";
 
 let product_list = document.querySelector(".product-list") as HTMLElement;
 
 let products_json: Product[] = [];
 
-function set_up_product_list(products : Product[]) : void {
+function set_up_product_list() : void {
+    if(chosen_op === "op1"){
+        products_json.sort(function(a,b){ 
+            let x = a.max_ratings_min_price > b.max_ratings_min_price? -1:1; 
+            return x;});
+    }
+    else if(chosen_op === "op2"){
+        products_json.sort(function(a,b){ 
+            let x = a.max_stars_min_price > b.max_stars_min_price? -1:1; 
+            return x;});
+    }
+    else if(chosen_op === "op3"){
+        products_json.sort(function(a,b){ 
+            let x = a.max_ratings_max_stars > b.max_ratings_max_stars? -1:1; 
+            return x;});
+    }
+    else if(chosen_op === "op4"){
+        products_json.sort(function(a,b){ 
+            let x = a.max_ratings_max_stars_min_price > b.max_ratings_max_stars_min_price? -1:1; 
+            return x;});
+    }
+
     product_list.textContent = "";
 
     let minpriceval = min_price.value.trim();
@@ -69,28 +90,31 @@ function set_up_product_list(products : Product[]) : void {
 
     let maxproductsval = max_num_of_products.value.trim(); 
     if(maxproductsval === ""){
-        maxproductsval = products.length.toString();
+        maxproductsval = products_json.length.toString();
     }
     let maxproductsint = parseInt(maxproductsval);
 
     for (let i = 0; i < maxproductsint; i++)
     {
-        let product = products[i];
+        if(i > 0 && products_json[i].desc !== products_json[i-1].desc)
+        {
+            let product = products_json[i];
 
-        if((minpricefloat <= product.price && product.price <= maxpricefloat) && 
-           (minstarsfloat <= product.stars && product.stars <= maxstarsfloat) && 
-           (minratingsint <= product.ratings && product.ratings <= maxratingsint)){
-                product_list.insertAdjacentHTML("beforeend", `<li class="product">
-                    <img src="${product.image}">
-                    <a href="${product.url}" target="_blank">
-                        ${product.desc}
-                    </a>
-                    <span class="price">$${product.price}</span>
-                    <span class="num-of-stars">${product.stars} stars</span>
-                    <span class="num-of-ratings">${product.ratings} ratings</span>
-                </li>`);
+            if((minpricefloat <= product.price && product.price <= maxpricefloat) && 
+            (minstarsfloat <= product.stars && product.stars <= maxstarsfloat) && 
+            (minratingsint <= product.ratings && product.ratings <= maxratingsint)){
+                    product_list.insertAdjacentHTML("beforeend", `<li class="product">
+                        <img src="${product.image}">
+                        <a href="${product.url}" target="_blank">
+                            ${product.desc}
+                        </a>
+                        <span class="price">$${product.price}</span>
+                        <span class="num-of-stars">${product.stars} stars</span>
+                        <span class="num-of-ratings">${product.ratings} ratings</span>
+                    </li>`);
+            }
         }
-   }
+    }
 }
 
 let option_buttons = document.querySelectorAll(".option-btn");
@@ -109,7 +133,7 @@ for(let i = 0; i < option_buttons.length; i++)
             e.target.classList.add("chosen-option");
             chosen_op = e.target.id;
 
-            set_up_product_list(products_json);
+            set_up_product_list();
         }
     });
 }
@@ -117,7 +141,7 @@ for(let i = 0; i < option_buttons.length; i++)
 document.querySelector("#form-submit").addEventListener("click", function(e) {
     e.preventDefault();
 
-    set_up_product_list(products_json);
+    set_up_product_list();
 });
 
 let send_message_to_server_list = document.querySelectorAll(".send-message-to-server");   
@@ -162,8 +186,7 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
 
                     let convertedResponse = JSON.parse(response);
                     products_json = convertedResponse;
-
-                    set_up_product_list(products_json);
+                    set_up_product_list();
                     document.querySelector(".main-middle .msg").textContent = "";
                     }
             };
