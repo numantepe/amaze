@@ -1,10 +1,10 @@
-from flask import Flask, request, render_template, jsonify, g
+from flask import Flask, request, render_template, jsonify
 from bs4 import BeautifulSoup
 import requests
 import lxml
 import cchardet 
 import chardet
-import threading
+import concurrent.futures
 
 app = Flask(__name__)
 
@@ -25,13 +25,12 @@ def get_html_doc(requests_session, search_amazon_url, html_docs, i):
 
     html_docs[i] = r.content #or r.text?
 
-def scrape_html_doc(chosen_country, amazon_url, product_set, html_doc): 
+def scrape_html_doc(chosen_country, amazon_url, html_doc): 
+    product_set = []
+
     soup = BeautifulSoup(html_doc, 'lxml')
 
     products = soup.select("div.s-result-item.s-asin")
-
-    #with open("html.txt", "w") as f:
-    #    f.write(products[0].prettify())
 
     for product in products:
         try:
@@ -63,6 +62,8 @@ def scrape_html_doc(chosen_country, amazon_url, product_set, html_doc):
             product_set.append(t)
         except:
             pass
+    
+    return product_set
 
 @app.route("/")
 def welcome_page():
@@ -84,8 +85,6 @@ def search_product():
         search_amazon_url += word + "+"
     search_amazon_url = search_amazon_url[:-1]
 
-    product_list = [] 
-
     requests_session = requests.Session()
 
     np = 0
@@ -96,38 +95,33 @@ def search_product():
 
     search_amazon_urls = [search_amazon_url + "&page=" + str(i) for i in range(1, np)]
 
-    threads = [None] * (np - 1)
     html_docs = [None] * (np - 1)
-    for i in range(np - 1):
-        t = threading.Thread(target=get_html_doc, args=[requests_session, search_amazon_urls[i], html_docs, i])
-        t.start()
-        threads[i] = t
-    for thread in threads:
-        thread.join()
- 
-    for i in range(np - 1):
-        scrape_html_doc(chosen_country, amazon_url, product_list, html_docs[i])
-
-    print("length:", len(product_list))
-
-    #with open("items.txt", "w") as f:
-    #    for p in list(product_list):
-    #        for x in p:
-    #            f.write(str(x))
-    #            f.write("\n")
-    #        f.write("===============")
-    #    f.write("\n")
+    
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        args_list = []
+        for i in range(np - 1):
+            args_list.append((requests_session, search_amazon_urls[i], html_docs, i))
+        for args in args_list:
+            executor.submit(get_html_doc, *args)
 
     found = []
 
-    for p in product_list:
-        found.append({"desc" : p[0], "url" : p[1], "image" : p[2], 
-                        "price" : p[3], "stars" : p[4], "ratings" : p[5],
-                        "max_ratings_min_price" : p[6],
-                        "max_stars_min_price" : p[7],
-                        "max_ratings_max_stars" : p[8],
-                        "max_ratings_max_stars_min_price" : p[9]})
-
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        args_list = []
+        for i in range(np - 1):
+            args_list.append((chosen_country, amazon_url, html_docs[i]))
+        results = []
+        for args in args_list:
+            results.append(executor.submit(scrape_html_doc, *args))
+        for f in concurrent.futures.as_completed(results):
+            for p in f.result():
+                found.append({"desc" : p[0], "url" : p[1], "image" : p[2], 
+                                "price" : p[3], "stars" : p[4], "ratings" : p[5],
+                                "max_ratings_min_price" : p[6],
+                                "max_stars_min_price" : p[7],
+                                "max_ratings_max_stars" : p[8],
+                                "max_ratings_max_stars_min_price" : p[9]})
+    
     return jsonify(found) 
 
 if __name__ == '__main__':
