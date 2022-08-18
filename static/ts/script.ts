@@ -13,6 +13,7 @@ interface Product {
 }
 
 let webURL : string = "http://127.0.0.1:5000";
+//let webURL : string = "https://amazedeals.herokuapp.com";
 let search_product = document.querySelector("#search-product") as HTMLInputElement;
 let min_price = document.querySelector("#min-price") as HTMLInputElement;
 let max_price = document.querySelector("#max-price") as HTMLInputElement;
@@ -179,9 +180,6 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
 
             xhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200){
-                    console.log("Response Type " + this.responseType);
-                    console.log("Response Text " + this.responseText);
-
                     let response = this.responseText;
 
                     let convertedResponse = JSON.parse(response);
@@ -199,4 +197,11 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
         }
     });
 }
+
+search_product.addEventListener("keydown", function(e){
+    if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("search").click();
+    }
+});
 }
