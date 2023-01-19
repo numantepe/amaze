@@ -30,7 +30,7 @@ You can search whatever you want to purchase by typing in the search bar.
 
 ![Alt text](/img/searchbar.png)
 
-For example, let's search "Electric Toothbrush"
+For example, let's search "Electric Toothbrush".
 
 Bingo! Amaze just listed the most best deals from top to bottom.
 
