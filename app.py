@@ -40,7 +40,7 @@ def scrape_html_doc(chosen_country, amazon_url, product_set, html_doc):
             if(chosen_country == "ca"):
                 desc = h2_desc_url.select("span.a-size-base-plus")[0].get_text()
             elif(chosen_country == "us"):
-                desc = h2_desc_url.select("span.a-size-medium")[0].get_text()
+                desc = h2_desc_url.select("span.a-size-base-plus")[0].get_text()
             url = amazon_url + h2_desc_url.select("a")[0].get("href")
 
             image = product.select("img.s-image")[0].get("src")
@@ -50,7 +50,8 @@ def scrape_html_doc(chosen_country, amazon_url, product_set, html_doc):
             div_stars_ratings = product.select("div.a-section.a-spacing-none.a-spacing-top-micro")[0]
 
             stars = float(div_stars_ratings.select("span.a-icon-alt")[0].get_text()[:3])
-            ratings = int(div_stars_ratings.select("span.a-size-base.s-underline-text")[0].get_text().replace(',', ''))
+
+            ratings = int(div_stars_ratings.select("span.a-size-base.s-underline-text")[0].get_text()[1:-1])
 
             max_ratings_min_price = ratings / price 
             max_stars_min_price = stars / price
@@ -104,7 +105,8 @@ def search_product():
         threads[i] = t
     for thread in threads:
         thread.join()
- 
+    
+
     for i in range(np - 1):
         scrape_html_doc(chosen_country, amazon_url, product_list, html_docs[i])
 
@@ -131,4 +133,4 @@ def search_product():
     return jsonify(found) 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
