@@ -193,7 +193,7 @@ for(let i = 0; i < send_message_to_server_list.length; i++)
             xhttp.open("POST", apiURL, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("search_product="+search_product.value.trim()+"&chosen_country="+chosen_country);
-            document.querySelector(".main-middle .msg").textContent = "Please wait a little while until the results show up.";
+            document.querySelector(".main-middle .msg").textContent = "Please wait a little while until the results show up. If nothing shows up (which is normal), try again.";
         }
     });
 }
