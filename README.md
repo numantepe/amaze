@@ -4,7 +4,7 @@ Amaze - Best Deals on Amazon.ca
 To visit: - it might take a while for it to laod when visiting for the first time <br>
 https://amaze-32kd.onrender.com
 
-Execute these commands in order to run locally: <br>
+Execute these commands in order to run locally: - Use python version 3.9 <br>
 ./install.sh <br>
 source venv/bin/activate <br>
 ./setup.sh <br>
