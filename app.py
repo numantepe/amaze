@@ -123,7 +123,15 @@ def search_product():
     found = []
 
     for p in product_list:
-        found.append({"desc" : p[0], "url" : p[1], "image" : p[2], 
+        url = p[1]
+        if chosen_country == "us":
+            # new_url = url[:url.find("ref=")] + "tag=topten0de-20"
+            # TODO(numan) : rn amazon.us not working? idk
+            new_url = url
+        else:
+            new_url = url
+
+        found.append({"desc" : p[0], "url" : new_url, "image" : p[2], 
                         "price" : p[3], "stars" : p[4], "ratings" : p[5],
                         "max_ratings_min_price" : p[6],
                         "max_stars_min_price" : p[7],
@@ -134,3 +142,4 @@ def search_product():
 
 if __name__ == '__main__':
     app.run()
+
