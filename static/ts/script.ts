@@ -12,8 +12,7 @@ interface Product {
     max_ratings_max_stars_min_price: number
 }
 
-let webURL : string = "http://127.0.0.1:5000";
-//let webURL : string = "https://amazedeals.herokuapp.com";
+let webURL : string = window.location.origin;
 let search_product = document.querySelector("#search-product") as HTMLInputElement;
 let min_price = document.querySelector("#min-price") as HTMLInputElement;
 let max_price = document.querySelector("#max-price") as HTMLInputElement;
