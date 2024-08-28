@@ -1,18 +1,14 @@
 # amaze
 Amaze - Best Deals on Amazon.ca
 
-To visit: - it might take a while for it to laod when visiting for the first time
+To visit: - it might take a while for it to laod when visiting for the first time <br>
 https://amaze-32kd.onrender.com
-
--
 
 Execute these commands in order to run locally: <br>
 ./install.sh <br>
 source venv/bin/activate <br>
 ./setup.sh <br>
 ./run.sh <br>
-
--
 
 Hello there, welcome!
 
