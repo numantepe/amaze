@@ -1,6 +1,8 @@
 # amaze
 Amaze - Best Deals on Amazon.ca
+
 -
+
 To visit: - it might take a while for it to laod when visiting for the first time, but it's very slow because I am using free tier hosting so I'd still recommend cloning and running it locally instead <br>
 https://amaze-32kd.onrender.com
 
@@ -9,7 +11,9 @@ Execute these commands in order to run locally: - Use python version 3.9 <br>
 source venv/bin/activate <br>
 ./setup.sh <br>
 ./run.sh <br>
+
 -
+
 Hello there, welcome!
 
 Are you frustrated that you still have not found the perfect deal on Amazon
