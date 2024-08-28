@@ -1,7 +1,7 @@
 # amaze
 Amaze - Best Deals on Amazon.ca
 
-To visit:
+To visit: - it might take a while for it to laod when visiting for the first time
 https://amaze-32kd.onrender.com
 
 -
