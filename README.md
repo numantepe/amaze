@@ -2,6 +2,8 @@
 Amaze - Best Deals on Amazon.ca
 
 -
+TODO: Replace the current mechanic web scraper with a LLM-based scraper instead
+-
 
 To visit: - it might take a while for it to laod when visiting for the first time, but it's very slow because I am using free tier hosting so I'd still recommend cloning and running it locally instead <br>
 https://amaze-32kd.onrender.com
