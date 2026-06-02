@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-python3 -m flask run
+python3.9 -m flask run
