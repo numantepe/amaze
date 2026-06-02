@@ -2,7 +2,7 @@
 Amaze - Best Deals on Amazon.ca
 
 -
-TODO: Replace the current mechanic web scraper with a LLM-based scraper
+TODO: Replace the current mechanic web scraper with an LLM-based scraper
 -
 
 To visit: - it might take a while for it to laod when visiting for the first time, but it's very slow because I am using free tier hosting so I'd still recommend cloning and running it locally instead <br>
